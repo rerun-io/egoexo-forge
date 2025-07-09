@@ -21,6 +21,11 @@ Uses [Rerun](https://rerun.io/) to visualize, [Gradio](https://www.gradio.app) f
   <img src="media/egoexo-viewer.gif" alt="example output" width="720" />
 </p>
 
+## Demo
+Hosted Demos can be found on huggingface spaces
+
+<a href='https://pablovela5620-egoexo-forge-viewer.hf.space'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue'></a>
+
 ## Installation
 ### Using Pixi
 Make sure you have the [Pixi](https://pixi.sh/latest/#installation) package manager installed
