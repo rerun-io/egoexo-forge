@@ -1,9 +1,13 @@
 [project]
 authors = [{ name = "pablo vela", email = "pablovela5620@gmail.com" }]
-dependencies = []
 name = "egoexo-forge"
 requires-python = ">= 3.11"
 version = "0.1.0"
+dependencies = [
+    "gradio>=5.22.0",
+    "gradio-rerun>=0.23.3,<0.24",
+    "gradio-huggingfacehub-search>=0.0.12,<0.0.13",
+]
 
 [build-system]
 build-backend = "hatchling.build"
@@ -19,6 +23,7 @@ simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "39e72
 
 
 [tool.pixi.tasks]
+app = { cmd = "python tools/app.py", description = "Run egoexo viewer Gradio app" }
 
 [tool.pixi.dependencies]
 python = "==3.12"
@@ -31,7 +36,7 @@ py-opencv = ">=4.10.0,<5"
 rerun-sdk = ">=0.23.1"
 tyro = ">=0.9.1,<0.10"
 tqdm = ">=4.67.1,<5"
-huggingface_hub = ">=0.27.1,<0.28"
+huggingface_hub = "*"
 open3d = ">=0.18.0,<0.19"
 scipy = ">=1.15.2,<2"
 pyserde = ">=0.24.0,<0.25"
