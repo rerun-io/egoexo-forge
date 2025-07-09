@@ -15,7 +15,7 @@ platforms = ["linux-64"]
 
 [tool.pixi.pypi-dependencies]
 egoexo_forge = { path = ".", editable = true }
-simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "200e29285dcfda678928e2bb4ba29bb973b988f9" }
+simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "39e721416f8fa77d2cab6df69034f9acce202fc2" }
 
 
 [tool.pixi.tasks]

@@ -17,7 +17,6 @@ from simplecv.data.exoego.base_exoego import BaseExoEgoSequence, ExoEgoLabels
 from simplecv.data.skeleton.coco_133 import COCO_133_ID2NAME, COCO_133_IDS, COCO_133_LINKS
 from simplecv.ops.triangulate import proj_3d_vectorized
 from simplecv.rerun_log_utils import (
-    RerunTyroConfig,
     confidence_scores_to_rgb,
     log_pinhole,
     log_video,
@@ -30,10 +29,10 @@ np.set_printoptions(suppress=True)
 
 @dataclass
 class BatchConvertConfig:
-    # rr_config: RerunTyroConfig
     rrd_save_dir: Path
     dataset: AnnotatedEgoDatasetUnion
     max_exo_videos_to_log: Literal[4, 8] = 8
+    num_to_log: int | None = None
     log_exo: bool = True
     log_ego: bool = True
 
@@ -394,7 +393,8 @@ def batch_raw_to_rrd(config: BatchConvertConfig):
     exoego_sequence: BaseExoEgoSequence = config.dataset.setup()
 
     for idx, current_exoego_sequence in enumerate(tqdm(exoego_sequence.iter_dataset(), desc="Processing sequences")):
-        if idx > 3:
+        # If num_sequences_to_convert is set, only process that many sequences
+        if config.num_to_log is not None and idx >= config.num_to_log:
             break
         ego_sequence: BaseEgoSequence | None = current_exoego_sequence.ego_sequence
         exo_sequence: BaseExoSequence | None = current_exoego_sequence.exo_sequence
@@ -428,13 +428,17 @@ def batch_raw_to_rrd(config: BatchConvertConfig):
 
         # check if dir exists, if not create it
         config.rrd_save_dir.mkdir(parents=True, exist_ok=True)
+        # check if rrd file already exists, if so skip
+        rrd_file_path: Path = config.rrd_save_dir / f"{idx:05d}.rrd"
+        if rrd_file_path.exists():
+            print(f"Skipping {rrd_file_path} as it already exists.")
+            continue
         rr.init(application_id=app_id, spawn=False)
-        rr.save(path=f"{config.rrd_save_dir}/{idx:05d}.rrd", default_blueprint=blueprint)
+        rr.save(path=rrd_file_path, default_blueprint=blueprint)
+        # rr.send_blueprint(blueprint)
 
-        rr.log("/", exoego_sequence.world_coordinate_system, static=True)
+        rr.log("/", current_exoego_sequence.world_coordinate_system, static=True)
         set_annotation_context()
-
-        rr.send_blueprint(blueprint)
 
         log_exoego_batch(
             current_exoego_sequence,
@@ -443,4 +447,4 @@ def batch_raw_to_rrd(config: BatchConvertConfig):
             timeline=timeline,
         )
 
-        print(f"Total time taken: {timer() - start_time:.2f} seconds")
+    print(f"Total time taken: {timer() - start_time:.2f} seconds")

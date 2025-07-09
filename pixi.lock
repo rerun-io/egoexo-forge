@@ -375,7 +375,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstandard-0.23.0-py312h66e93f0_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb8e6e7a_2.conda
       - pypi: https://files.pythonhosted.org/packages/d6/d8/f87ea6f42456254b48915970ed98e993110521e9263472840174d32c880d/hf_transfer-0.1.9-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
-      - pypi: git+https://github.com/pablovela5620/simplecv.git?rev=200e29285dcfda678928e2bb4ba29bb973b988f9#200e29285dcfda678928e2bb4ba29bb973b988f9
+      - pypi: git+https://github.com/pablovela5620/simplecv.git?rev=7963a1b1f0cd1132d9d74c3bc5e8668ec225c9f7#7963a1b1f0cd1132d9d74c3bc5e8668ec225c9f7
       - pypi: ./
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -1110,7 +1110,7 @@ packages:
 - pypi: ./
   name: egoexo-forge
   version: 0.1.0
-  sha256: 22294241ce48ab5955f76093ff84ec9d728ff5bd46d3af4a4af30eab7f597290
+  sha256: a71fe04eb35992bba902bb83d755a2bc0aba3e3a63e6b44d6033793d375645d5
   requires_python: '>=3.11'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/einops-0.8.1-pyhd8ed1ab_0.conda
@@ -4652,7 +4652,7 @@ packages:
   - pkg:pypi/shtab?source=hash-mapping
   size: 20225
   timestamp: 1744494202036
-- pypi: git+https://github.com/pablovela5620/simplecv.git?rev=200e29285dcfda678928e2bb4ba29bb973b988f9#200e29285dcfda678928e2bb4ba29bb973b988f9
+- pypi: git+https://github.com/pablovela5620/simplecv.git?rev=7963a1b1f0cd1132d9d74c3bc5e8668ec225c9f7#7963a1b1f0cd1132d9d74c3bc5e8668ec225c9f7
   name: simplecv
   version: 0.5.0
   requires_dist:
