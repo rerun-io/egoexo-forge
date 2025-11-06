@@ -30,7 +30,7 @@ Hosted Demos can be found on huggingface spaces
 ### Using Pixi
 Make sure you have the [Pixi](https://pixi.sh/latest/#installation) package manager installed
 
-This is Linux only with an NVIDIA GPU for batch conversion to RRD format
+Requires: Linux x86-64 or macOS AArch64
 
 ```bash
 git clone https://github.com/rerun-io/egoexo-forge.git
