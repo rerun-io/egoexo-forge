@@ -15,21 +15,23 @@ requires = ["hatchling"]
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
 
 [tool.pixi.pypi-dependencies]
 egoexo_forge = { path = ".", editable = true }
 simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "31cc852429cc292959f30c0277010ec57caa6caf" }
+timm = "<1.0"  # Pin for wilor-nano compatibility (RotaryEmbedding import moved in 1.0)
+
+# Linux-only dependencies (onnxruntime-gpu has no macOS wheels)
+[tool.pixi.target.linux-64.pypi-dependencies]
 rtmlib = { git = "https://github.com/pablovela5620/rtmlib.git", rev = "98bca2193c39b349034b280803b54c9ee58f7c68" }
 wilor-nano = { git = "https://github.com/pablovela5620/wilor-nano.git", rev = "b2d019fd7dcd4ac61b15da3de4200df9c29ba411" }
-timm = "<1.0"  # Pin for wilor-nano compatibility (RotaryEmbedding import moved in 1.0)
 
 
 [tool.pixi.tasks]
 app = { cmd = "python tools/app.py", description = "Run egoexo viewer Gradio app" }
 
 [tool.pixi.dependencies]
-python = "==3.12"
 jaxtyping = ">=0.2.33,<0.3"
 beartype = ">=0.19.0,<0.20"
 numpy = ">=2.0"
