@@ -44,12 +44,47 @@ All commands can be listed using `pixi task list`
 ```
 pixi run app
 ```
-### CLI (TODO)
+### CLI
 
+#### View ExoEgo Datasets
+Use `simplecv-view-exoego` to visualize various ego/exo datasets with Rerun:
+
+```bash
+# View Robocap session
+pixi run simplecv-view-exoego robocap --session-id 12
+
+# See all options
+pixi run simplecv-view-exoego --help
+```
+
+#### Hand Tracking with WiLor (GPU Required)
+Run WiLor-based hand detection and keypoint estimation on ego cameras:
+
+```bash
+# GPU environment required for hand tracking
+pixi run -e gpu python tools/robocap_hand_tracking.py \
+    --skip-camera-names "left,right,left_front,right_front" \
+    robocap --session-id 12
+```
+
+This will:
+- Detect hands in left_eye and right_eye cameras
+- Extract 2D keypoints using WiLor-nano
+- Triangulate 3D hand keypoints from multi-view detections
+- Visualize results in Rerun
+
+**Options:**
+- `--skip-camera-names`: Comma-separated camera names to skip (e.g., skip wide-angle cameras)
+- `--detection-only`: Only run hand detection (faster, no keypoints)
+- `--no-triangulate`: Disable 3D triangulation
+- `--frame-start/--frame-end`: Process specific frame range
 
 You can see all tasks by running `pixi task list`
 
 ## Dataset Information
+
+### Robocap
+An egocentric dataset featuring a 6-camera helmet rig with synchronized stereo eye cameras, stereo front cameras, and wide-angle left/right cameras. Includes Kalibr-based multi-camera calibration.
 
 ### Assembly101
 A procedural activity dataset with 4321 multi-view videos of people assembling and disassembling 101 take-apart toy vehicles, featuring rich variations in action ordering, mistakes, and corrections.
@@ -71,6 +106,7 @@ Coming soon...
 - [Assembly101](https://assembly-101.github.io/) ✅
 - [HO-Cap](https://irvlutd.github.io/HOCap/) ✅
 - [EgoDex](https://arxiv.org/abs/2505.11709) ✅
+- Robocap ✅
 
 ### Planned Support
 

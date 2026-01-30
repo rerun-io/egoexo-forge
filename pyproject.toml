@@ -4,9 +4,9 @@ name = "egoexo-forge"
 requires-python = ">= 3.11"
 version = "0.1.0"
 dependencies = [
-    "gradio>=5.22.0",
-    "gradio-rerun>=0.25,<=0.27",
-    "gradio-huggingfacehub-search>=0.0.12,<0.0.13",
+    "gradio>=6.0",
+    "gradio-rerun>=0.28.2,<0.29",
+    "rerun-sdk>=0.28.1,<0.29",
 ]
 
 [build-system]
@@ -19,7 +19,13 @@ platforms = ["linux-64", "osx-arm64", "win-64"]
 
 [tool.pixi.pypi-dependencies]
 egoexo_forge = { path = ".", editable = true }
-simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "39e721416f8fa77d2cab6df69034f9acce202fc2" }
+simplecv = { git = "https://github.com/pablovela5620/simplecv.git", rev = "31cc852429cc292959f30c0277010ec57caa6caf" }
+timm = "<1.0"  # Pin for wilor-nano compatibility (RotaryEmbedding import moved in 1.0)
+
+# Linux-only dependencies (onnxruntime-gpu has no macOS wheels)
+[tool.pixi.target.linux-64.pypi-dependencies]
+rtmlib = { git = "https://github.com/pablovela5620/rtmlib.git", rev = "98bca2193c39b349034b280803b54c9ee58f7c68" }
+wilor-nano = { git = "https://github.com/pablovela5620/wilor-nano.git", rev = "b2d019fd7dcd4ac61b15da3de4200df9c29ba411" }
 
 
 [tool.pixi.tasks]
@@ -40,7 +46,55 @@ scipy = ">=1.15.2,<2"
 pyserde = ">=0.24.0,<0.25"
 h5py = ">=3.13.0,<4"
 natsort = ">=8.4.0,<9"
-pillow = ">=8.0,<12.0"
+pytorch = ">=2.7,<2.8"
+torchvision = ">=0.22,<0.23"
+pillow = ">=8.0,<12"
+av = "*"
+
+[tool.pixi.target.linux-64.dependencies]
+datasets = ">=4.0.0"
+
+# cuda129 feature - GPU dependencies
+[tool.pixi.feature.cuda129]
+platforms = ["linux-64"]
+channels = ["https://prefix.dev/conda-forge"]
+
+[tool.pixi.feature.cuda129.system-requirements]
+cuda = "12.9"
+
+[tool.pixi.feature.cuda129.dependencies]
+# CUDA Build Tools
+cuda-compiler = "*"
+cuda-version = "12.9.*"
+cuda-cudart-dev = "*"
+cuda-crt = "*"
+libcusparse-dev = "*"
+cuda-driver-dev = "*"
+cuda-nvcc = "*"
+cuda-nvrtc-dev = "*"
+cuda-nvtx = "*"
+cuda-nvtx-dev = "*"
+cuda-nvml-dev = "*"
+cuda-profiler-api = "*"
+
+# CUDA Libraries
+cudnn = "*"
+libcublas-dev = "*"
+libcudss-dev = "*"
+libcufile-dev = "*"
+libcufft-dev = "*"
+libcurand-dev = "*"
+libcusolver-dev = "*"
+cusparselt = "*"
+libnvjitlink = "*"
+pytorch-gpu = ">=2.7,<2.8"
+torchvision = ">=0.22,<0.23"
+
+[tool.pixi.feature.cuda129.pypi-dependencies]
+onnxruntime-gpu = ">=1.22.0,<2" # GPU version overrides CPU-only onnxruntime
+
+[tool.pixi.environments]
+gpu = { features = ["cuda129"], solve-group = "cuda129" }
 
 [tool.ruff]
 line-length = 150
